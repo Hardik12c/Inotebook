@@ -1,11 +1,13 @@
 const mongoose=require('mongoose');
+const bcrypt=require('bcryptjs');
+
 
 const userschema=new mongoose.Schema({
     name:{
         type:String,
         required:[true,'Please Provide your name'],
         trim:true,
-        MinLength:3,
+        minLength:3,
         maxLength:25
     },
     email:{
@@ -22,5 +24,9 @@ const userschema=new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+})
+userschema.pre('save',async function() {
+    const salt= await bcrypt.genSalt(10);
+    this.password=await bcrypt.hash(this.password,salt);
 })
 module.exports=mongoose.model('User',userschema);

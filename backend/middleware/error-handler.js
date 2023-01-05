@@ -16,7 +16,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     customerror.messg=`Duplicate value entered for ${Object.keys(err.keyValue)} Please enter a fresh value`;
     customerror.status=400;
   }
-  // return res.status(customerror.status).json({err});
+  // return res.status(customerror.status).json({err,error:err.message});
   return res.status(customerror.status).json({messg:customerror.messg});
 }
 
