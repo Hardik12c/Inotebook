@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 const bcrypt=require('bcryptjs');
-
+const jwt=require('jsonwebtoken');
 
 const userschema=new mongoose.Schema({
     name:{
@@ -29,4 +29,13 @@ userschema.pre('save',async function() {
     const salt= await bcrypt.genSalt(10);
     this.password=await bcrypt.hash(this.password,salt);
 })
+userschema.methods.createjwt=function(){
+    return jwt.sign({userId:this._id},process.env.JWT_KEY);
+}
+userschema.methods.comparepasswords=async function(checkpass){
+    const ismatch=await bcrypt.compare(checkpass,this.password);
+    return ismatch;
+}
+
+
 module.exports=mongoose.model('User',userschema);
