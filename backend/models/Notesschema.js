@@ -17,6 +17,11 @@ const Notesschema=mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    createdby:{
+        type:mongoose.Types.ObjectId,
+        requierd:true,
+        ref:'User'
     }
 })
 
