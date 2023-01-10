@@ -1,64 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Noteitem from "./Noteitem";
-
+import axios from "axios";
 export default function Notes() {
-  const notesinitial = [
-    {
-      tag: "General",
-      _id: "63b8725f9aab810414ad1a682",
-      title: "React js",
-      description: "Here we are presenting a React app",
-      createdby: "63b86dda2a29c11fbc5f9193",
-      date: "2023-01-06T19:11:27.497Z",
-      __v: 0,
-    },
-    {
-      tag: "General",
-      _id: "63b8725f9aab810414ad1a683",
-      title: "native js",
-      description: "Here we are presenting a React app",
-      createdby: "63b86dda2a29c11fbc5f9193",
-      date: "2023-01-06T19:11:27.497Z",
-      __v: 0,
-    },
-    {
-      tag: "General",
-      _id: "63b8725f9aab810414ad1a684",
-      title: "native js",
-      description: "Here we are presenting a React app",
-      createdby: "63b86dda2a29c11fbc5f9193",
-      date: "2023-01-06T19:11:27.497Z",
-      __v: 0,
-    },
-    {
-      tag: "General",
-      _id: "63b8725f9aab810414ad1a685",
-      title: "native js",
-      description: "Here we are presenting a React app",
-      createdby: "63b86dda2a29c11fbc5f9193",
-      date: "2023-01-06T19:11:27.497Z",
-      __v: 0,
-    },
-    {
-      tag: "General",
-      _id: "63b8725f9aab810414ad1a686",
-      title: "native js",
-      description: "Here we are presenting a React app",
-      createdby: "63b86dda2a29c11fbc5f9193",
-      date: "2023-01-06T19:11:27.497Z",
-      __v: 0,
-    },
-    {
-      tag: "General",
-      _id: "63b8725f9aab810414ad1a687",
-      title: "native js",
-      description: "Here we are presenting a React app",
-      createdby: "63b86dda2a29c11fbc5f9193",
-      date: "2023-01-06T19:11:27.497Z",
-      __v: 0,
-    },
-  ];
-  const [notes, setnotes] = useState(notesinitial);
+  const [notes, setnotes] = useState([]);
+  const getallnotes = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:5000/api/v1/notes/", {
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2I4NmRkYTJhMjljMTFmYmM1ZjkxOTMiLCJpYXQiOjE2NzMwMzExMzF9.Z07U1ZAP6fIUUHahQmudYU11IwuSxa9o-kT-KXy7nAs `,
+        },
+      });
+      setnotes(data.Notes);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getallnotes();
+  }, []);
+
   return (
     <div className="row">
       {notes.map((note) => (

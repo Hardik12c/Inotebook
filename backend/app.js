@@ -4,7 +4,7 @@ const express = require("express");
 const authrouter=require('./routes/auth');
 const notesrouter=require('./routes/notes');
 const connectDB = require("./db/db");
-
+const cors=require('cors');
 const app = express();
 
 // middleware
@@ -16,6 +16,8 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 
 
 app.use(express.json());
+
+app.use(cors());
 
 
 
