@@ -57,7 +57,23 @@ export default function Home() {
       console.log(error);
     }
   };
-
+  //updatenote
+  const updatenote = async (data) => {
+    try {
+      const updatenote = await axios.patch(
+        `http://localhost:5000/api/v1/notes/${data.id}`,
+        { title: data.title, description: data.description, tag: data.tag },
+        {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2I4NmRkYTJhMjljMTFmYmM1ZjkxOTMiLCJpYXQiOjE2NzMwMzExMzF9.Z07U1ZAP6fIUUHahQmudYU11IwuSxa9o-kT-KXy7nAs `,
+          },
+        }
+      );
+      console.log(updatenote);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // to fetch all notes in starting
   useEffect(() => {
     getallnotes();
@@ -127,7 +143,12 @@ export default function Home() {
         </button>
       </form>
       <h2>Your Notes</h2>
-      <Notes notes={notes} getnotes={getallnotes} deletenote={deletenote}/>
+      <Notes
+        notes={notes}
+        getnotes={getallnotes}
+        updatenote={updatenote}
+        deletenote={deletenote}
+      />
     </div>
   );
 }
