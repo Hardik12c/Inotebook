@@ -2,8 +2,9 @@ import React, { useRef, useState } from "react";
 import Noteitem from "./Noteitem";
 export default function Notes(props) {
   const ref = useRef(null);
+  const refclose = useRef(null);
   const [updatedinput, setupdatedinput] = useState({
-    id:"",
+    id: "",
     title: "",
     description: "",
     tag: "General",
@@ -14,6 +15,7 @@ export default function Notes(props) {
   const handleclick = (e) => {
     e.preventDefault();
     props.updatenote(updatedinput);
+    ref.current.click();
     setupdatedinput({
       title: "",
       description: "",
@@ -22,7 +24,12 @@ export default function Notes(props) {
   };
   const updatenote = (note) => {
     ref.current.click();
-    setupdatedinput({id:note._id,title:note.title,description:note.description,tag:note.tag});
+    setupdatedinput({
+      id: note._id,
+      title: note.title,
+      description: note.description,
+      tag: note.tag,
+    });
   };
   return (
     <>
@@ -106,6 +113,7 @@ export default function Notes(props) {
             </div>
             <div className="modal-footer">
               <button
+                ref={refclose}
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
