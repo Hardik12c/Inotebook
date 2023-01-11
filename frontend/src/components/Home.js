@@ -7,8 +7,10 @@ export default function Home() {
   // states defined
   const [notes, setnotes] = useState([]);
 
+  //refresh key to refresh the data
+  const [refreshkey, setrefreshkey] = useState(0);
   // client to server communication
-
+  
   // get all the notes
   const getallnotes = async () => {
     try {
@@ -35,6 +37,7 @@ export default function Home() {
           },
         }
       );
+      setrefreshkey(refreshkey === 0 ? 1 : 0);
       console.log(addednote);
     } catch (error) {
       console.log(error);
@@ -49,6 +52,7 @@ export default function Home() {
           Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2I4NmRkYTJhMjljMTFmYmM1ZjkxOTMiLCJpYXQiOjE2NzMwMzExMzF9.Z07U1ZAP6fIUUHahQmudYU11IwuSxa9o-kT-KXy7nAs `,
         },
       });
+      setrefreshkey(refreshkey === 0 ? 1 : 0);
     } catch (error) {
       console.log(error);
     }
@@ -65,6 +69,7 @@ export default function Home() {
           },
         }
       );
+      setrefreshkey(refreshkey === 0 ? 1 : 0);
       console.log(updatenote);
     } catch (error) {
       console.log(error);
@@ -73,18 +78,13 @@ export default function Home() {
   // to fetch all notes in starting
   useEffect(() => {
     getallnotes();
-  }, []);
+  }, [refreshkey]);
 
-  
   return (
     <div className="container ">
-      <AddNoteform createnote={createnote}/>
+      <AddNoteform createnote={createnote} />
       <h2>Your Notes</h2>
-      <Notes
-        notes={notes}
-        updatenote={updatenote}
-        deletenote={deletenote}
-      />
+      <Notes notes={notes} updatenote={updatenote} deletenote={deletenote} />
     </div>
   );
 }
