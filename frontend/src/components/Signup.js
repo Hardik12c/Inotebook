@@ -1,16 +1,20 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function Signup() {
+  const navigate = useNavigate();
+  const showalert = useOutletContext();
   const postform = async (input) => {
     try {
       const { data } = await axios.post(
         "http://localhost:5000/api/v1/auth/register",
         { name: input.name, email: input.email, password: input.password }
       );
-      console.log(data.token);
+      localStorage.setItem("token", data.token);
+      navigate("/");
     } catch (error) {
-      console.log(error.response.data.messg);
+      showalert(error.response.data.messg, "danger");
     }
   };
   const [registerinput, setregisterinput] = useState({

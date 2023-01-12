@@ -1,17 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
-
+import {useNavigate} from "react-router-dom";
 export default function Login() {
+  const navigate=useNavigate();
+
   const postform = async (email,password) => {
     try {
       const {data} = await axios.post(
         "http://localhost:5000/api/v1/auth/login",
         { email: email, password: password }
       );
-      console.log(data.token);
       localStorage.setItem('token',data.token);
+      navigate('/');
     } catch (error) {
-      console.log(error.response.data.messg);
+      showalert(error.response.data.messg, "danger");
     }
   };
 
