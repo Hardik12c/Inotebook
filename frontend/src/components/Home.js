@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import AddNoteform from "./AddNoteform";
 import Notes from "./Notes";
 
@@ -14,6 +14,8 @@ export default function Home() {
   // passed by outlet
   const showalert = useOutletContext();
 
+  //Navigate to othertab
+  const navigate=useNavigate();
   // client to server communication
 
   // get all the notes
@@ -21,7 +23,7 @@ export default function Home() {
     try {
       const { data } = await axios.get("http://localhost:5000/api/v1/notes/", {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2I4NmRkYTJhMjljMTFmYmM1ZjkxOTMiLCJpYXQiOjE2NzMwMzExMzF9.Z07U1ZAP6fIUUHahQmudYU11IwuSxa9o-kT-KXy7nAs `,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
       setnotes(data.Notes);
@@ -38,7 +40,7 @@ export default function Home() {
         { title: data.title, description: data.description, tag: data.tag },
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2I4NmRkYTJhMjljMTFmYmM1ZjkxOTMiLCJpYXQiOjE2NzMwMzExMzF9.Z07U1ZAP6fIUUHahQmudYU11IwuSxa9o-kT-KXy7nAs `,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         }
       );
@@ -56,7 +58,7 @@ export default function Home() {
       showalert("Note Deleted", "danger");
       await axios.delete(`http://localhost:5000/api/v1/notes/${id}`, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2I4NmRkYTJhMjljMTFmYmM1ZjkxOTMiLCJpYXQiOjE2NzMwMzExMzF9.Z07U1ZAP6fIUUHahQmudYU11IwuSxa9o-kT-KXy7nAs `,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
       setrefreshkey(refreshkey === 0 ? 1 : 0);
@@ -72,7 +74,7 @@ export default function Home() {
         { title: data.title, description: data.description, tag: data.tag },
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2M2I4NmRkYTJhMjljMTFmYmM1ZjkxOTMiLCJpYXQiOjE2NzMwMzExMzF9.Z07U1ZAP6fIUUHahQmudYU11IwuSxa9o-kT-KXy7nAs `,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         }
       );
@@ -85,9 +87,13 @@ export default function Home() {
   };
   // to fetch all notes in starting
   useEffect(() => {
-    getallnotes();
+    if(localStorage.getItem('token')){
+      getallnotes();
+    }else{
+      navigate('/login')
+    }
   }, [refreshkey]);
-
+  
   return (
     <div className="container ">
       <AddNoteform createnote={createnote} />
