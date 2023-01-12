@@ -12,11 +12,11 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     customerror.messg=`No item found with id : ${err.value}`;
     customerror.status=404;
   }
-  if(err.code && err.code==11000){
-    customerror.messg=`Duplicate value entered for ${Object.keys(err.keyValue)} Please enter a fresh value`;
+  if(err.errors.email.properties.type && err.errors.email.properties.type==="unique"){
+    customerror.messg=`Duplicate value entered for ${Object.keys(err.errors)} Please enter a fresh value`;
     customerror.status=400;
   }
-  // return res.status(customerror.status).json({err,error:err.message});
+  // return res.status(customerror.status).json({err,error:err.errors.email.properties.type});
   return res.status(customerror.status).json({messg:customerror.messg});
 }
 
