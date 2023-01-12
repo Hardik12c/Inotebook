@@ -25,13 +25,19 @@ export default function Signup() {
   const handlechange = (e) => {
     setregisterinput({ ...registerinput, [e.target.name]: e.target.value });
   };
-  const submitform = (e) => {
+  const submitform = async (e) => {
     e.preventDefault();
-    postform(registerinput);
+    await postform(registerinput);
+    setregisterinput({
+      name: "",
+      email: "",
+      password: "",
+    });
   };
 
   return (
     <div className="container">
+      <h2 className="my-2">Create an account to use Inotebook</h2>
       <form>
         <div className="form-group my-2">
           <label htmlFor="exampleInputEmail1">Name</label>

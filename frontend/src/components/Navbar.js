@@ -3,6 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   let location = useLocation();
+  const logouttheuser = () => {
+    localStorage.removeItem("token");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
       <div className="container-fluid">
@@ -46,7 +50,12 @@ export default function Navbar() {
           </ul>
 
           {localStorage.getItem("token") ? (
-            <Link className="btn btn-primary mx-2" to="/login" onClick={()=>(localStorage.removeItem('token'))} role="button">
+            <Link
+              className="btn btn-primary mx-2"
+              onClick={logouttheuser}
+              role="button"
+              to="/login"
+            >
               Logout
             </Link>
           ) : (

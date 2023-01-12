@@ -1,18 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {useNavigate, useOutletContext} from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 export default function Login() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const showalert = useOutletContext();
 
-  const postform = async (email,password) => {
+  const postform = async (email, password) => {
     try {
-      const {data} = await axios.post(
+      const { data } = await axios.post(
         "http://localhost:5000/api/v1/auth/login",
         { email: email, password: password }
       );
-      localStorage.setItem('token',data.token);
-      navigate('/');
+      localStorage.setItem("token", data.token);
+      navigate("/");
     } catch (error) {
       showalert(error.response.data.messg, "danger");
     }
@@ -26,14 +26,15 @@ export default function Login() {
   const handlepassword = (e) => {
     setpassword(e.target.value);
   };
-  const submitform=(e)=>{
+  const submitform = async (e) => {
     e.preventDefault();
-    postform(email,password);
+    await postform(email, password);
     setemail("");
     setpassword("");
-  }
+  };
   return (
     <div className="container">
+      <h2 className="my-2">Login to Continue to Inotebook</h2>
       <form>
         <div className="form-group my-2">
           <label htmlFor="exampleInputEmail1">Email address</label>
