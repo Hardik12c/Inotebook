@@ -21,7 +21,7 @@ export default function Home() {
   // get all the notes
   const getallnotes = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/v1/notes/", {
+      const { data } = await axios.get("https://inotebook-backend-d9ht.onrender.com/api/v1/notes/", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -36,7 +36,7 @@ export default function Home() {
   const createnote = async (data) => {
     try {
       const addednote = await axios.post(
-        "http://localhost:5000/api/v1/notes/",
+        "https://inotebook-backend-d9ht.onrender.com/api/v1/notes/",
         { title: data.title, description: data.description, tag: data.tag },
         {
           headers: {
@@ -56,7 +56,7 @@ export default function Home() {
   const deletenote = async (id) => {
     try {
       showalert("Note Deleted", "danger");
-      await axios.delete(`http://localhost:5000/api/v1/notes/${id}`, {
+      await axios.delete(`https://inotebook-backend-d9ht.onrender.com/api/v1/notes/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -70,7 +70,7 @@ export default function Home() {
   const updatenote = async (data) => {
     try {
       const updatenote = await axios.patch(
-        `http://localhost:5000/api/v1/notes/${data.id}`,
+        `https://inotebook-backend-d9ht.onrender.com/api/v1/notes/${data.id}`,
         { title: data.title, description: data.description, tag: data.tag },
         {
           headers: {
