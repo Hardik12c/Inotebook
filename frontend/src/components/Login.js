@@ -8,7 +8,7 @@ export default function Login() {
   const postform = async (email, password) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/v1/auth/login",
+        "https://inotebook-backend-d9ht.onrender.com/api/v1/auth/login",
         { email: email, password: password }
       );
       localStorage.setItem("token", data.token);
