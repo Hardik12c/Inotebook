@@ -8,7 +8,7 @@ export default function Signup() {
   const postform = async (input) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/v1/auth/register",
+        "https://inotebook-backend-d9ht.onrender.com/api/v1/auth/register",
         { name: input.name, email: input.email, password: input.password }
       );
       localStorage.setItem("token", data.token);
